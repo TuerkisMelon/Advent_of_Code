@@ -1,14 +1,13 @@
 import requests
 
+# get Input from adventofcode
 uri = 'https://adventofcode.com/2021/day/1/input'
 response = requests.get(uri, cookies={'session': SESSIONID}, headers={'User-Agent': USERAGENT})
 vallist = []
 
 if __name__ == "__main__":
-    print(response.text)
-    dat = response.text
-    val = ""
-    for num in dat:
+    val = ""                        # output in list
+    for num in response.text:
         if num.isnumeric():
             val += str(num)
         elif "\n" in num:
@@ -16,11 +15,33 @@ if __name__ == "__main__":
             val = ""
         else:
             pass
-    count = 0
+        
+    
+    count = 0                       # Part 1
     larger = 0
     smaller = 0
     same = 0
     old_num = 100000
+
+    for num in vallist:
+        num = int(num)
+        if old_num < num:
+            larger += 1
+        elif old_num > num:
+            smaller += 1
+        else:
+            same += 1
+        count += 1
+        old_num = num
+    print(f"old_num: {old_num} larger: {larger} smaller: {smaller} same: {same} count: {count}")
+
+    
+    count = 0                   # Part 2
+    larger = 0
+    smaller = 0
+    same = 0
+    old_num = 100000
+    
     numb = (None, None, None)
     for num in vallist:
         numb = (0, 0, 0)
@@ -48,21 +69,3 @@ if __name__ == "__main__":
         print(old_num)
         count += 1
     print(f"larger: {larger} smaller: {smaller} same: {same} count: {count}")
-
-    count = 0
-    larger = 0
-    smaller = 0
-    same = 0
-    old_num = 100000
-
-    for num in vallist:
-        num = int(num)
-        if old_num < num:
-            larger += 1
-        elif old_num > num:
-            smaller += 1
-        else:
-            same += 1
-        count += 1
-        old_num = num
-    print(f"old_num: {old_num} larger: {larger} smaller: {smaller} same: {same} count: {count}")
